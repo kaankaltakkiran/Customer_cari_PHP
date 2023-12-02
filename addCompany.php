@@ -43,7 +43,6 @@ if(isset($_POST['form_companyName'])){
       </div>
       </div>
     ';
-
 }
 ?>
     <div class="container">
