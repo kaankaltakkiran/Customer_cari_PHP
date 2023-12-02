@@ -8,7 +8,7 @@ $activePage="index";
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   </head>
   <body>
@@ -17,8 +17,9 @@ $activePage="index";
     ?>
     <div class="container">
       <div class="row">
-        <h1 class="text-danger text-center mt-3">Welcome</h1>
-        <h3 class="text-info text-center mt-3"><?php echo $_SESSION['adsoyad'] ?></h3>
+      <h1 class="text-danger text-center mt-3">Customer Cari Version 1</h1>
+        <h2 class="text-warning text-center mt-3">Welcome</h2>
+        <h3 class="text-info text-center mt-3">Name: <?php echo $_SESSION['adsoyad'] ?></h3>
       </div>
     </div>
     
