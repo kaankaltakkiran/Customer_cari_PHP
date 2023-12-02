@@ -48,7 +48,7 @@ $companys = $SORGU->fetchAll(PDO::FETCH_ASSOC);
   <div class="card-body">
     <h5 class="card-title"><?php echo $companys[0]['companyname']?></h5>
     <p class="card-text"><?php echo $companys[0]['companyaddress']?></p>
-    <a href="company.php?id=<?php echo $companys[0]['userid']?>" class="btn btn-primary">See My Company</a>
+    <a href="company.php?idUser=<?php echo $companys[0]['userid']?>" class="btn btn-primary">See My Company</a>
   </div>
 </div>
 <?php } ?>

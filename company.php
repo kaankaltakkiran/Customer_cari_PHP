@@ -19,6 +19,23 @@ require 'loginControl.php';
 <h1 class='alert alert-primary mt-2'>My Company</h1>
 </div>
 </div>
+<?php
+//!Silme işlemi
+if(isset($_GET['remove'])){
+  require('db.php');
+  $remove_id = $_GET['remove'];
+  $sql = "DELETE FROM companys WHERE companyid = :remove";
+  $SORGU = $DB->prepare($sql);
+   $SORGU->bindParam(':remove', $remove_id); 
+   $SORGU->execute();
+   echo '
+<div class="alert auto-close text-center alert-success alert-dismissible fade show" role="alert">
+Company Deleted...
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+';
+  };
+?>
 <!-- tablo ile personel listeleme -->
 <table class="table table-bordered table-striped">
 <thead>
@@ -29,6 +46,8 @@ require 'loginControl.php';
 <th>CompanyPhoneNumber</th>
 <th>Companyİban</th>
 <th>CompanyAddress</th>
+<th>Update</th>
+<th>Delete</th>
 </tr>
 </thead>
 <tbody>
@@ -36,9 +55,9 @@ require 'loginControl.php';
 
 <?php
 require_once('db.php');
-$sql = "SELECT * FROM companys WHERE userid = :id";
+$sql = "SELECT * FROM companys WHERE userid = :idUser";
 $SORGU = $DB->prepare($sql);
-$SORGU->bindParam(':id',$_GET['id']);
+$SORGU->bindParam(':idUser',$_GET['idUser']);
 $SORGU->execute();
 $companys = $SORGU->fetchAll(PDO::FETCH_ASSOC);
 
@@ -51,6 +70,8 @@ echo "
 <td>{$company['companynumber']}</td>
 <td>{$company['companyiban']}</td>
 <td>{$company['companyaddress']}</td>
+<td><a href='updateCompany.php?idCompany={$company['companyid']}' class='btn btn-success btn-sm'>Update</a></td>
+<td><a href='company.php?remove={$company['companyid']}' onclick='return confirm(\"Remove Company?\")' class='btn btn-danger btn-sm'>Delete</a></td>
 </tr> 
 ";
 }
@@ -59,6 +80,7 @@ echo "
 </tbody>
 </table>
 </div>
+
 <a href="index.php" class="btn btn-primary">Back To Home</a>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </body>

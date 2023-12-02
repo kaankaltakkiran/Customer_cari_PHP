@@ -73,7 +73,7 @@ if(isset($_POST['form_companyName'])){
 </div>
 <div class="form-floating  mb-3">
   <textarea class="form-control" name="form_companyAddress" placeholder="Write Address" required  id="floatingTextarea"></textarea>
-  <label for="floatingTextarea">Address</label>
+  <label for="floatingTextarea">Company Address</label>
 </div>
 
                   <button type="submit" name="submit" class="btn btn-primary mt-2">Save Company</button>   	
