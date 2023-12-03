@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('db.php');
 require 'loginControl.php';
 ?>
@@ -37,15 +38,17 @@ Company Deleted...
   };
 ?>
 <!-- tablo ile personel listeleme -->
+<div class="table-responsive">
 <table class="table table-bordered table-striped">
 <thead>
 <tr>
-<th>CompanyId</th>
-<th>CompanyName</th>
-<th>CompanyEmail</th>
-<th>CompanyPhoneNumber</th>
-<th>Companyİban</th>
-<th>CompanyAddress</th>
+<th>Company Id</th>
+<th>Company Name</th>
+<th>Authorized Person</th>
+<th>Company Email</th>
+<th>Company Phone Number</th>
+<th>Company İban</th>
+<th>Company Address</th>
 <th>Update</th>
 <th>Delete</th>
 </tr>
@@ -66,6 +69,7 @@ echo "
 <tr>
 <th>{$company['companyid']}</th>
 <td>{$company['companyname']}</td>
+<td>{$_SESSION['adsoyad']}</td>
 <td>{$company['companyemail']}</td>
 <td>{$company['companynumber']}</td>
 <td>{$company['companyiban']}</td>
@@ -79,6 +83,7 @@ echo "
 
 </tbody>
 </table>
+</div>
 </div>
 
 <a href="index.php" class="btn btn-primary">Back To Home</a>

@@ -44,7 +44,9 @@ $companys = $SORGU->fetchAll(PDO::FETCH_ASSOC);
 <?php if ($companys[0]['userid']!== null) { ?>
   <h2 class="text-danger text-start mt-3">My Company</h2>
       <div class="card" style="width: 18rem;">
+      <a href="company.php?idUser=<?php echo $companys[0]['userid']?>">
   <img src="./public/img/companyPerson.jpg" class="card-img-top" alt="...">
+  </a>
   <div class="card-body">
     <h5 class="card-title"><?php echo $companys[0]['companyname']?></h5>
     <p class="card-text"><?php echo $companys[0]['companyaddress']?></p>

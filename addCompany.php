@@ -76,7 +76,11 @@ if(isset($_POST['form_companyName'])){
   <label for="floatingTextarea">Company Address</label>
 </div>
 
-                  <button type="submit" name="submit" class="btn btn-primary mt-2">Save Company</button>   	
+                  <button type="submit" name="submit" class="btn btn-primary mt-2">Save Company</button>  
+                  <div class="text-center">
+  <a type="button" href="index.php"  class="btn btn-warning mt-2">Back To Home</a>
+</div>   	
+     </form> 	
      </form>
      <br>
       <br>
