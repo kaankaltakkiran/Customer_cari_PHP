@@ -13,17 +13,38 @@ if (isset($_POST['form_selectedcompany'])) {
 //Update bilgileri alıp kaydetme işlemi
 $selectedCompany = $_POST['form_selectedcompany'];
 $debt = $_POST['form_debt'];
+// Değeri negatifine çevir
+$negativeValue = -intval($debt); // intval() fonksiyonu ile girişin tam sayıya çevrildi
 
-  $sql = "UPDATE users SET selectcompany = :form_selectedcompany, userdebt = :form_debt, debtime=:reqdate WHERE userid = :userid";
+  $sql = "UPDATE users SET selectcompany = :form_selectedcompany, userdebt = :form_debt WHERE userid = :userid";
   $SORGU = $DB->prepare($sql);
 
   $SORGU->bindParam(':form_selectedcompany',$selectedCompany);
-  $SORGU->bindParam(':form_debt',$debt);
-  $SORGU->bindParam(':reqdate', date("Y-m-d H:i:s"));
+  $SORGU->bindParam(':form_debt',$negativeValue);
   $SORGU->bindParam(':userid',$_SESSION['id']);
   // die(date("H:i:s"));
   $SORGU->execute();  
 }
+
+if (isset($_POST['form_debt'])) {
+  ///////////////////////////////////////
+  /////////////////////////////////////// GÜNCELLEME İŞLEMİ
+  ///////////////////////////////////////
+  // echo "<pre>"; print_r($_POST);
+  // echo "<pre>"; print_r($_GET);
+//Update bilgileri alıp kaydetme işlemi
+$selectedCompany = $_POST['form_selectedcompany'];
+$debt = $_POST['form_debt'];
+  $sql = "UPDATE companys SET companydebt	 = :form_debt,debtime=:reqdate,requserid=:requser WHERE companyid = :form_selectedcompany";
+  $SORGU = $DB->prepare($sql);
+  $SORGU->bindParam(':requser', $_SESSION['id']);
+  $SORGU->bindParam(':form_selectedcompany',$selectedCompany);
+  $SORGU->bindParam(':form_debt',$debt);
+  $SORGU->bindParam(':reqdate', date("Y-m-d H:i:s"));
+  // die(date("H:i:s"));
+  $SORGU->execute();  
+}
+
 
 
 ?>
