@@ -65,6 +65,12 @@ $SORGU = $DB->prepare($sql);
 $SORGU->bindParam(':idUser',$_GET['idUser']);
 $SORGU->execute();
 $companys = $SORGU->fetchAll(PDO::FETCH_ASSOC);
+/* joinli sql */
+
+/* SELECT companys.*,users.*
+FROM users 
+INNER JOIN companys 
+ON companys.userid=users.userid where users.userid=:idUser */
 
 foreach ($companys as $company) {
 echo "
@@ -91,7 +97,10 @@ echo "
 <a href="index.php" class="btn btn-warning">Back To Home</a>
 <div class="text-center">
   <a type="button" href="cariAction.php"  class="btn btn-primary mt-2">Cari Action</a>
-</div>  
+</div>
+<div class="text-center">
+  <a type="button" href="transerMoney.php"  class="btn btn-danger mt-2">Transfer Money</a>
+</div>   
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </body>
 </html>
