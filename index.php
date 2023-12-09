@@ -12,14 +12,15 @@ $activePage="index";
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   </head>
   <body>
+   <!--Ortak navbar -->
   <?php
-    require_once('navbar.php');
-    ?>
+    require_once('navbar.php');?>
     <?php
+   /*  Giriş yapan kullanıcının şirketini göstermek için veritabanından şirket bilgilerini alma */
      require_once('db.php');
-$sql = "SELECT * FROM companys WHERE userid = :id";
+$sql = "SELECT * FROM companys WHERE userid = :idUser";
 $SORGU = $DB->prepare($sql);
-$SORGU->bindParam(':id',$_SESSION['id']);
+$SORGU->bindParam(':idUser',$_SESSION['id']);
 $SORGU->execute();
 $companys = $SORGU->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -29,7 +30,7 @@ $companys = $SORGU->fetchAll(PDO::FETCH_ASSOC);
         <h2 class="text-warning text-center mt-3">Welcome</h2>
         <h3 class="text-info text-center mt-3">Name: <?php echo $_SESSION['adsoyad'] ?></h3>
       </div>
-      <!-- Kullanıcı şirket eklemediyse şirket ekleme sayfasını görcek -->
+      <!-- Kullanıcı şirket eklemediyse şirket ekleme sayfasını görecek -->
       <?php if ($companys[0]['userid']== null) { ?>
       <div class="card" style="width: 18rem;">
   <img src="./public/img/company.jpg" class="card-img-top" alt="...">
@@ -40,7 +41,7 @@ $companys = $SORGU->fetchAll(PDO::FETCH_ASSOC);
   </div>
 </div> 
 <?php } ?>
-  <!-- Kullanıcı şirket eklemediyse şirket eklediyse şirket sayfasını görcek -->
+  <!-- Kullanıcı şirket eklediyse şirket sayfasını görcek -->
 <?php if ($companys[0]['userid']!== null) { ?>
   <h2 class="text-danger text-start mt-3">My Company</h2>
       <div class="card" style="width: 18rem;">
@@ -50,14 +51,20 @@ $companys = $SORGU->fetchAll(PDO::FETCH_ASSOC);
   <div class="card-body">
     <h5 class="card-title"><?php echo $companys[0]['companyname']?></h5>
     <p class="card-text"><?php echo $companys[0]['companyaddress']?></p>
-    <a href="company.php?idUser=<?php echo $companys[0]['userid']?>" class="btn btn-primary card-link btn-sm">See My Company</a>
-    <a href="myActions.php?idUser=<?php echo $companys[0]['userid']?>" class="btn btn-danger card-link btn-sm">See My Action</a>
-    
+    <div class="row">
+<!--       Kullanıcı oluşturduğu şirketin bilgilerini görüntüleyebilir ve güncelleyebilir. -->
+        <div class="col-6">
+    <a href="company.php?idUser=<?php echo $companys[0]['userid']?>" class="btn btn-primary btn-sm">See My Company</a>
+    </div>
+    <!--Kullanıcı oluşturduğu şirketin üzerinden para işlemleri yapabilir -->
+    <div class="col-6">
+    <a href="transferAction.php" class="btn btn-danger btn-sm">Balance Transfer Action</a>
+    </div>
+    </div>
   </div>
 </div>
 <?php } ?>
     </div>
-    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </body>
 </html>
