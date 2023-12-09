@@ -82,7 +82,7 @@ die();  */
 ?>
   <select class="form-select" name="form_selectedaccount"required>
   <option disabled selected value="">Select Account</option>
-  <option value="<?php echo $userss[0]['companyid']; ?>">
+  <option value="<?php echo $userss[0]['userid']; ?>">
  <?php echo $userss[0]['companyname']; ?> (Balance:
  <?php echo $userss[0]['companybalance']; ?> )
   </option>
@@ -177,10 +177,10 @@ if (isset($_POST['amount'])) {
         $SORGU->execute();
        //!Alıcı hesap bilgileri
         $sender = $sql2[0]['companyname'];
-        $senderid = $sql2[0]['companyid'];
+        $senderid = $sql2[0]['userid'];
        //!Gönderici hesap bilgileri
         $receiver = $sql1[0]['companyname'];
-        $receiverid = $sql1[0]['companyid'];
+        $receiverid = $sql1[0]['userid'];
 
         $sql = "INSERT INTO transactions (sender,senderid,reciver,reciverid,companybalance) VALUES ('$sender','$senderid','$receiver','$receiverid','$amount')";
         $SORGU = $DB->prepare($sql);
