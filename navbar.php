@@ -17,7 +17,7 @@ session_start();
           
 <?php
 require_once('db.php');
-$sql = "SELECT * FROM transaction WHERE senderid=:idUser OR reciverid=:idUser";
+$sql = "SELECT * FROM transactions WHERE senderid=:idUser OR reciverid=:idUser";
 $SORGU = $DB->prepare($sql);
 $SORGU->bindParam(':idUser',$_SESSION['id']);
 $SORGU->execute();

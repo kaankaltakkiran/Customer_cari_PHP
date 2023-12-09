@@ -182,12 +182,12 @@ if (isset($_POST['amount'])) {
         $receiver = $sql1[0]['companyname'];
         $receiverid = $sql1[0]['companyid'];
 
-        $sql = "INSERT INTO transaction (sender,senderid,reciver,reciverid,companybalance) VALUES ('$sender','$senderid','$receiver','$receiverid','$amount')";
+        $sql = "INSERT INTO transactions (sender,senderid,reciver,reciverid,companybalance) VALUES ('$sender','$senderid','$receiver','$receiverid','$amount')";
         $SORGU = $DB->prepare($sql);
         /*   bindparam eksik */
         /* $SORGU->bindParam(':form_name',  $name); */
         $SORGU->execute();
-        $sql3 = "SELECT * FROM transaction";
+        $sql3 = "SELECT * FROM transactions";
         $SORGU = $DB->prepare($sql3);
         $SORGU->execute();
         $CEVAP = $SORGU->fetchAll(PDO::FETCH_ASSOC);

@@ -43,7 +43,7 @@ $activePage="history";
 
 <?php
 require_once('db.php');
-$sql = "SELECT * FROM transaction where senderid = :idUser or reciverid = :idUser";
+$sql = "SELECT * FROM transactions where senderid = :idUser or reciverid = :idUser";
 $SORGU = $DB->prepare($sql);
 $SORGU->bindParam(':idUser',$_SESSION['id']);
 $SORGU->execute();
