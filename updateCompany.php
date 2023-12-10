@@ -101,7 +101,7 @@ Company Updated...
               <i class="bi bi-send"></i>
               </a> -->
               <button type="submit" class="btn btn-success">Update Company</button>
-              <a href="company.php?idUser=<?php echo $companys[0]['userid']?>" class="btn btn-primary mt-2">See My Company</a>
+              <a href="company.php?idUser=<?php echo $company['userid']?>" class="btn btn-primary mt-2">See My Company</a>
             </div>
 </form>
 </div>
