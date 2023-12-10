@@ -27,6 +27,7 @@ require 'navbar.php';
 </div>
 <!-- table-responsive -->
 <div class="">
+  <!-- Transfer yapılabilecek kullanıcılar listeleniyor. -->
 <table id="example" class="table table-bordered table-striped ">
 <thead>
 <tr>
@@ -42,7 +43,7 @@ require 'navbar.php';
 </thead>
 <tbody>
 </div>
-
+<!-- Gerekli bilgileri almak için join kullanmak zorunda kaldım. Çünkü user tablosunda sadece username ve userid var. Company tablosunda ise company bilgileri var. Bu yüzden join kullanarak iki tabloyu birleştirdim. -->
 <?php
 require_once('db.php');
 $sql = "SELECT companys.companyid,companys.companyname,companys.companyemail,companys.companynumber,companys.companyiban,companys.companyaddress,users.username,users.userid

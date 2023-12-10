@@ -1,12 +1,9 @@
 <?php
 require 'loginControl.php';
-
 require_once('db.php');
 
+//!Update işlemi için gerekli bilgileri alıp güncelleme işlemi yapıyoruz.
 if (isset($_POST['form_companyName'])) {
-  ///////////////////////////////////////
-  /////////////////////////////////////// GÜNCELLEME İŞLEMİ
-  ///////////////////////////////////////
   // echo "<pre>"; print_r($_POST);
   // echo "<pre>"; print_r($_GET);
 //Update bilgileri alıp kaydetme işlemi
@@ -16,7 +13,7 @@ $companyNumber = $_POST['form_companyNumber'];
 $companyIban = $_POST['form_CompanyIban'];
 $companyAddress = $_POST['form_companyAddress'];
   $id= $_GET['idCompany'];
-
+  //!Companyidye göre günceleme işlemi yapıyoruz.
   $sql = "UPDATE companys SET companyname = :form_companyName, companyemail = :form_companyEmail, companynumber=:form_companyNumber, companyiban=:form_CompanyIban, companyaddress=:form_companyAddress
    WHERE companyid = :idCompany";
   $SORGU = $DB->prepare($sql);
@@ -36,14 +33,11 @@ $id= $_GET['idCompany'];
 //Seçilen idye göre bilgileri getirme
 $sql = "SELECT * FROM companys WHERE companyid = :idCompany";
 $SORGU = $DB->prepare($sql);
-
 $SORGU->bindParam(':idCompany', $id);
-
 $SORGU->execute();
-
 $companys = $SORGU->fetchAll(PDO::FETCH_ASSOC);
 $company  = $companys[0];
-// echo "<pre>"; print_r($kullanicilar);
+// echo "<pre>"; print_r($companys);
 ?>
 <!doctype html>
 <html lang="en">
@@ -60,8 +54,7 @@ $company  = $companys[0];
     </div>
     <div class="container">
   <div class="row">
-
-  
+<!-- İşlem başarılıysa gerçekleştiyse aşağıdaki mesaj görünecektir. -->
     <?php
   if (isset($_POST['form_companyName'])) {
 echo '

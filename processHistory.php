@@ -28,7 +28,7 @@ $activePage="history";
 </div>
 </div>
 <div>
-  //!İşlem geçmişini listeleme
+ <!--  İşlem geçmişini listeleme -->
 <table id="example" class="table table-bordered table-striped" style="width:100%">
 <thead>
 <tr>
@@ -41,7 +41,7 @@ $activePage="history";
 </thead>
 <tbody>
 </div>
-//!Göndericinin yada alıcının id bilgisine göre işlem geçmişi listeleme
+<!-- Göndericinin yada alıcının id bilgisine göre işlem geçmişi listeleme -->
 <?php
 require_once('db.php');
 $sql = "SELECT * FROM transactions where senderid = :idUser or reciverid = :idUser";
