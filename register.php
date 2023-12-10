@@ -18,7 +18,7 @@ $activePage="register";
     <div class="container">
   <div class="row justify-content-center mt-3">
   <div class="col-6">
-    //!İşlemden sonra login sayfasına yönlendirme
+  <!--   İşlemden sonra login sayfasına yönlendirme -->
   <?php 
 if (isset($_POST['form_email'])) {
   header("location: login.php");
