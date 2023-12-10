@@ -60,7 +60,7 @@ if (isset($_POST['form_email'])) {
     <script src="hideShow.js"></script>
   </body>
 </html>
-//!Kullanıcı üye bilgilerini veri tabanına kaydetme
+<!-- Kullanıcı üye bilgilerini veri tabanına kaydetme -->
 <?php
 if(isset($_POST['form_email'])){
   require_once('db.php');
@@ -68,7 +68,7 @@ if(isset($_POST['form_email'])){
   $email = $_POST['form_email'];
   $gender=$_POST['form_gender'];
   $password = $_POST['form_password'];
-  //!Şifrele hashleme
+/*  Şifrele hashleme */
   $password = password_hash($password, PASSWORD_DEFAULT);   
 
   $sql = "INSERT INTO users (username,useremail,usergender,userpassword) VALUES (:form_name,:form_email,:form_gender,'$password')";
