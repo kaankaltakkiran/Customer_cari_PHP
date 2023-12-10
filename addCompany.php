@@ -19,6 +19,7 @@ require 'loginControl.php';
     require_once('navbar.php');
     ?>
     <?php
+    //!Şirket ekleme kısmı.
 if(isset($_POST['form_companyName'])){
   require_once('db.php');
   $companyName = $_POST['form_companyName'];

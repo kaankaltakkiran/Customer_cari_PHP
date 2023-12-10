@@ -25,6 +25,7 @@ require 'navbar.php';
 </div>
 <?php
 //!Silme işlemi
+//! Gelen id ye göre şirketi silme
 if(isset($_GET['remove'])){
   require('db.php');
   $remove_id = $_GET['remove'];
@@ -40,7 +41,7 @@ Company Deleted...
 ';
   };
 ?>
-<!-- tablo ile personel listeleme -->
+<!-- Şirket bilgilerini listeleme-->
 <div class="table-responsive">
 <table class="table table-bordered table-striped">
 <thead>
@@ -59,7 +60,7 @@ Company Deleted...
 </thead>
 <tbody>
 </div>
-
+<!-- Giriş yapan kullanıcının id bilgisine göre şirketini listeleme -->
 <?php
 require_once('db.php');
 $sql = "SELECT * FROM companys WHERE userid = :idUser";
@@ -91,7 +92,6 @@ echo "
 ";
 }
 ?>
-
 </tbody>
 </table>
 </div>
