@@ -52,6 +52,7 @@ Company Deleted...
 <th>Company Phone Number</th>
 <th>Company İban</th>
 <th>Company Address</th>
+<th>My Balance</th>
 <th>Update</th>
 <th>Delete</th>
 </tr>
@@ -83,6 +84,7 @@ echo "
 <td>{$company['companynumber']}</td>
 <td>{$company['companyiban']}</td>
 <td>{$company['companyaddress']}</td>
+<td>{$company['companybalance']}₺</td>
 <td><a href='updateCompany.php?idCompany={$company['companyid']}' class='btn btn-success btn-sm'>Update</a></td>
 <td><a href='company.php?remove={$company['companyid']}' onclick='return confirm(\"Remove Company?\")' class='btn btn-danger btn-sm'>Delete</a></td>
 </tr> 
