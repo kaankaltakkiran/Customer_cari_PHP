@@ -39,13 +39,13 @@ if (isset($_POST['form_email'])) {
   <span class="input-group-text bg-transparent"><i id="togglePassword" class="bi bi-eye-slash"></i></span>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="form_gender" value="Male" >
+  <input class="form-check-input" type="radio" name="form_gender" value="Male" required >
   <label class="form-check-label" >
   Male
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="form_gender" value="Female" >
+  <input class="form-check-input" type="radio" name="form_gender" value="Female" required>
   <label class="form-check-label" >
   Female
   </label>

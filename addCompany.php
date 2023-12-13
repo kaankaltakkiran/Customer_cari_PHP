@@ -3,7 +3,6 @@
 $activePage="index";
 require 'loginControl.php';
 ?>
-./bank_2830284.png
 <!doctype html>
 <html lang="en">
   <head>

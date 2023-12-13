@@ -39,9 +39,12 @@ $companys = $SORGU->fetchAll(PDO::FETCH_ASSOC);
   <div class="card-body">
     <h5 class="card-title">Company</h5>
     <p class="card-text">Add Company </p>
-    <a href="addCompany.php" class="btn btn-primary">Add</a>
+    <a href="addCompany.php" class="btn btn-primary">Add Company </a>
   </div>
 </div> 
+    <!--Ortak footer -->
+    <?php
+    require_once('footer.php');?>
 <?php } ?>
   <!-- Kullanıcı şirket eklediyse şirket sayfasını görcek -->
 <?php if ($companys[0]['userid']!== null) { ?>
@@ -65,11 +68,17 @@ $companys = $SORGU->fetchAll(PDO::FETCH_ASSOC);
     </div>
   </div>
 </div>
-<?php } ?>
     </div>
-    <!--Ortak footer -->
-    <?php
-    require_once('footer.php');?>
+    <footer class="bg-body-tertiary text-center text-lg-start mt-3 ">
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2023 Copyright: Kaan Kaltakkıran 
+    <a class="text-body" target="_blank" href="https://github.com/kaankaltakkiran/Customer_cari_PHP/"><i class="bi bi-github fs-4"></i></a>
+
+  </div>
+  <!-- Copyright -->
+</footer>
+<?php } ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </body>
 </html>
