@@ -1,43 +1,49 @@
 <?php
 require 'loginControl.php';
-require_once('db.php');
+require_once 'db.php';
 
 //!Update işlemi için gerekli bilgileri alıp güncelleme işlemi yapıyoruz.
 if (isset($_POST['form_companyName'])) {
-  // echo "<pre>"; print_r($_POST);
-  // echo "<pre>"; print_r($_GET);
-//Update bilgileri alıp kaydetme işlemi
-$companyName = $_POST['form_companyName'];
-$companyEmail = $_POST['form_companyEmail'];
-$companyNumber = $_POST['form_companyNumber'];
-$companyIban = $_POST['form_CompanyIban'];
-$companyAddress = $_POST['form_companyAddress'];
-  $id= $_GET['idCompany'];
-  //!Companyidye göre günceleme işlemi yapıyoruz.
-  $sql = "UPDATE companys SET companyname = :form_companyName, companyemail = :form_companyEmail, companynumber=:form_companyNumber, companyiban=:form_CompanyIban, companyaddress=:form_companyAddress
+    // echo "<pre>"; print_r($_POST);
+    // echo "<pre>"; print_r($_GET);
+    //Update bilgileri alıp kaydetme işlemi
+    $companyName = $_POST['form_companyName'];
+    $companyEmail = $_POST['form_companyEmail'];
+    $companyNumber = $_POST['form_companyNumber'];
+    $companyIban = $_POST['form_CompanyIban'];
+    $companyAddress = $_POST['form_companyAddress'];
+    $id = $_GET['idCompany'];
+    //!Companyidye göre günceleme işlemi yapıyoruz.
+    $sql = "UPDATE companys SET companyname = :form_companyName, companyemail = :form_companyEmail, companynumber=:form_companyNumber, companyiban=:form_CompanyIban, companyaddress=:form_companyAddress
    WHERE companyid = :idCompany";
-  $SORGU = $DB->prepare($sql);
+    $SORGU = $DB->prepare($sql);
 
-  $SORGU->bindParam(':form_companyName',$companyName);
-  $SORGU->bindParam(':form_companyEmail',$companyEmail);
-  $SORGU->bindParam(':form_companyNumber',$companyNumber);
-  $SORGU->bindParam(':form_CompanyIban',$companyIban);
-  $SORGU->bindParam(':form_companyAddress',$companyAddress);
-  $SORGU->bindParam(':idCompany',$id);
+    $SORGU->bindParam(':form_companyName', $companyName);
+    $SORGU->bindParam(':form_companyEmail', $companyEmail);
+    $SORGU->bindParam(':form_companyNumber', $companyNumber);
+    $SORGU->bindParam(':form_CompanyIban', $companyIban);
+    $SORGU->bindParam(':form_companyAddress', $companyAddress);
+    $SORGU->bindParam(':idCompany', $id);
 
-  // die(date("H:i:s"));
-  $SORGU->execute();  
+    // die(date("H:i:s"));
+    $SORGU->execute();
 }
 
-$id= $_GET['idCompany'];
+$id = $_GET['idCompany'];
 //Seçilen idye göre bilgileri getirme
 $sql = "SELECT * FROM companys WHERE companyid = :idCompany";
 $SORGU = $DB->prepare($sql);
 $SORGU->bindParam(':idCompany', $id);
 $SORGU->execute();
 $companys = $SORGU->fetchAll(PDO::FETCH_ASSOC);
-$company  = $companys[0];
+$company = $companys[0];
 // echo "<pre>"; print_r($companys);
+//! Giriş yapan kullanıcı ile şirket sahibi aynı değilse yetkilendirme hatası
+if ($_SESSION['id'] != $company['userid']) {
+    //!Yetkilendirme hatası durumunda bir hata sayfasına yönlendir veya bir hata mesajı göster
+    header("Location: authorizationControl.php");
+    exit();
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -56,8 +62,8 @@ $company  = $companys[0];
   <div class="row">
 <!-- İşlem başarılıysa gerçekleştiyse aşağıdaki mesaj görünecektir. -->
     <?php
-  if (isset($_POST['form_companyName'])) {
-echo '
+if (isset($_POST['form_companyName'])) {
+    echo '
 <div class="alert auto-close text-center alert-success alert-dismissible fade show" role="alert">
 Company Updated...
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -68,7 +74,7 @@ Company Updated...
     <div class="col-6">
       <form method="POST">
   <div class="form-floating mb-3">
-  <input type="text" name="form_companyName" class="form-control"value='<?php echo $company['companyname'];?>'>
+  <input type="text" name="form_companyName" class="form-control"value='<?php echo $company['companyname']; ?>'>
   <label for="ınputName">Company Name</label>
 </div>
 <div class="form-floating mb-3">
@@ -76,21 +82,21 @@ Company Updated...
   <label>Authorized Person</label>
 </div>
 <div class="form-floating mb-3">
-  <input type="email" name="form_companyEmail" class="form-control" value='<?php echo $company['companyemail']?>'>
+  <input type="email" name="form_companyEmail" class="form-control" value='<?php echo $company['companyemail'] ?>'>
   <label for="ınputEmail">Company Email</label>
 </div>
 </div>
 <div class="col-6">
 <div class="form-floating mb-3">
-  <input type="text" name="form_companyNumber" class="form-control" value='<?php echo $company['companynumber']?>'>
+  <input type="text" name="form_companyNumber" class="form-control" value='<?php echo $company['companynumber'] ?>'>
   <label for="ınputDegree">Company Phone Number</label>
 </div>
 <div class="form-floating mb-3">
-  <input type="text" name="form_CompanyIban" class="form-control"value='<?php echo $company['companyiban']?>'>
+  <input type="text" name="form_CompanyIban" class="form-control"value='<?php echo $company['companyiban'] ?>'>
   <label for="ınputUnit">Company İban</label>
 </div>
 <div class="form-floating mb-4">
-  <input type="text" name="form_companyAddress" class="form-control"  value='<?php echo $company['companyaddress']?>'>
+  <input type="text" name="form_companyAddress" class="form-control"  value='<?php echo $company['companyaddress'] ?>'>
   <label for="ınputNumber">Company Address</label>
 </div>
 
@@ -101,7 +107,7 @@ Company Updated...
               <i class="bi bi-send"></i>
               </a> -->
               <button type="submit" class="btn btn-success">Update Company</button>
-              <a href="company.php?idUser=<?php echo $company['userid']?>" class="btn btn-primary mt-2">See My Company</a>
+              <a href="company.php?idUser=<?php echo $company['userid'] ?>" class="btn btn-primary mt-2">See My Company</a>
             </div>
 </form>
 </div>
@@ -111,5 +117,5 @@ Company Updated...
   </body>
 </html>
 
- 
-  
+
+
