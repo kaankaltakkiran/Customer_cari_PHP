@@ -27,6 +27,7 @@ Normal kullanıcı3= email= selin@gmail.com password= 123
 - [X] Kullanıcı, **See My Company** butonuna tıklayarak şirket bilgilerini gördüğü sayfa açılır. Bu sayfada kullanıcı isterse şirket bilgilerini güncelleyebilir veya şirketini silebilir.
 - [X] Kullanıcı, **Update** butonuna tıklayarak bilgilerini güncelleyebildiği sayfa açılır, **Delete** butonuna tıklayarak **alert** ile emin misiniz diye uyarıldıktan sonra şirketini silebilir.
 - [X] Kullanıcı, eğer urlden başka id yazarsa başka kullanıcıların bilgilerini görüyordu. Kontrol eklenerek bu sorun giderildi.
+- [X] Kullanıcı, **Transaction History** sayfasında eğer kullanıcı para gönderdiyse + işareti ile gönderdiği para miktarı, para aldıysa - işareti ile aldığı para miktarı görür.
 - [X] Kullanıcı, **Balance Transfer Action** butonuna tıklayarak para transferi yapabilceği şirketleri görür. **Action** butonuna tıklayarak seçtiği şirkete para transferi yapacağı sayfaya yönlenir.
 - [X] Kullanıcı, para transferi yapacağı kişinin bilgilerini görür. Daha sonra selectlisten kendi şirket hesabını seçerek dilediği miktarda para transferi yapabilir.
 - [X] Kullanıcı, para miktari olarak 0 veya negatif bir değer girerse  **alert** ile uyarı mesajı çıkmaktadır.
