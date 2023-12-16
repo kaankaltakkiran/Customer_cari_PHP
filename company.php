@@ -63,12 +63,19 @@ Company Deleted...
 </div>
 <!-- Giriş yapan kullanıcının id bilgisine göre şirketini listeleme -->
 <?php
-require_once 'db.php';
-$sql = "SELECT * FROM companys WHERE userid = :idUser";
-$SORGU = $DB->prepare($sql);
-$SORGU->bindParam(':idUser', $_GET['idUser']);
-$SORGU->execute();
-$companys = $SORGU->fetchAll(PDO::FETCH_ASSOC);
+//! Giriş yapan kullanıcı ile şirket sahibi aynı değilse yetkilendirme hatası
+if ($_SESSION['id'] != $_GET['idUser']) {
+    //!Yetkilendirme hatası durumunda bir hata sayfasına yönlendir veya bir hata mesajı göster
+    header("Location: authorizationControl.php");
+    exit();
+} else {
+
+    require_once 'db.php';
+    $sql = "SELECT * FROM companys WHERE userid = :idUser";
+    $SORGU = $DB->prepare($sql);
+    $SORGU->bindParam(':idUser', $_GET['idUser']);
+    $SORGU->execute();
+    $companys = $SORGU->fetchAll(PDO::FETCH_ASSOC);
 /* joinli sql */
 
 /* SELECT companys.*,users.*
@@ -78,8 +85,8 @@ ON companys.userid=users.userid where users.userid=:idUser */
 
 /* <th>{$company['companyid']}</th> */
 /* <th>" . htmlspecialchars($company['companyid']) . "</th> */
-foreach ($companys as $company) {
-    echo "
+    foreach ($companys as $company) {
+        echo "
 <tr>
 <th>{$company['companyid']}</th>
 <td>{$company['companyname']}</td>
@@ -93,6 +100,7 @@ foreach ($companys as $company) {
 <td><a href='company.php?remove={$company['companyid']}' onclick='return confirm(\"Remove Company?\")' class='btn btn-danger btn-sm'>Delete</a></td>
 </tr>
 ";
+    }
 }
 ?>
 </tbody>
