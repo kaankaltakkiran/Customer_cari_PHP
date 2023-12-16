@@ -1,8 +1,8 @@
 <?php
 session_start();
-require('db.php');
+require 'db.php';
 require 'loginControl.php';
-$activePage="history";
+$activePage = "history";
 ?>
 <!doctype html>
 <html lang="en">
@@ -12,20 +12,24 @@ $activePage="history";
     <title>Transaction History</title>
     <link rel="icon" type="image/x-icon" href="./public/img/favicon.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<!--      Datatables için gerekli cdnler-->    
+<!--      Datatables için gerekli cdnler-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
 
   </head>
   <body>
-  <?php require 'navbar.php'; ?>
+  <?php require 'navbar.php';?>
 <div class="container">
 <div class="row">
 <div class='row justify-content-center text-center'>
   <div class="col-sm-4 col-md-6 col-lg-8">
 <h1 class='alert alert-primary mt-2'>Transaction History</h1>
 </div>
+</div>
+<div class='row justify-content-start text-center'>
+<h2 class="text-warning mt-3">Welcome</h2>
+        <h3 class="text-info  mb-3">Name: <?php echo $_SESSION['adsoyad'] ?></h3>
 </div>
 <div>
  <!--  İşlem geçmişini listeleme -->
@@ -35,7 +39,7 @@ $activePage="history";
 <th>Process İd</th>
 <th>Sender</th>
 <th>Reciver</th>
-<th>Company Balance</th>
+<th>Transaction Amount</th>
 <th>Process Time</th>
 </tr>
 </thead>
@@ -43,23 +47,32 @@ $activePage="history";
 </div>
 <!-- Göndericinin yada alıcının id bilgisine göre işlem geçmişi listeleme -->
 <?php
-require_once('db.php');
+require_once 'db.php';
 $sql = "SELECT * FROM transactions where senderid = :idUser or reciverid = :idUser";
 $SORGU = $DB->prepare($sql);
-$SORGU->bindParam(':idUser',$_SESSION['id']);
+$SORGU->bindParam(':idUser', $_SESSION['id']);
 $SORGU->execute();
 $transactions = $SORGU->fetchAll(PDO::FETCH_ASSOC);
 foreach ($transactions as $transaction) {
     $processtime = new DateTime($transaction['processtime']);
     $formattedProcesstime = $processtime->format('d-m-Y H:i:s'); // İstediğiniz formatta tarih ve saat
-echo "
+    // Eğer session ID, işlemi gerçekleştirenin ID'sine eşitse
+    if ($_SESSION['id'] == $transaction['senderid']) {
+        //!Para gönderdiği için - işareti şeklinde gösterilmesi
+        $companyBalanceDisplay = "-{$transaction['companybalance']}₺";
+        //!Para aldığı için + işareti şeklinde gösterilmesi
+    } else {
+        $companyBalanceDisplay = "+{$transaction['companybalance']}₺";
+    }
+
+    echo "
 <tr>
 <th>{$transaction['id']}</th>
 <td>{$transaction['sender']}</td>
 <td>{$transaction['reciver']}</td>
-<td>{$transaction['companybalance']}₺</td>
+<td>{$companyBalanceDisplay}</td>
 <td>{$formattedProcesstime}</td>
-</tr> 
+</tr>
 ";
 }
 ?>
@@ -68,9 +81,9 @@ echo "
 </div>
 </div>
 
-<a href="index.php" class="btn btn-warning">Back To Home</a> 
+<a href="index.php" class="btn btn-warning">Back To Home</a>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-<!--      Datatables için gerekli cdnler-->   
+<!--      Datatables için gerekli cdnler-->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
@@ -98,9 +111,9 @@ $(document).ready(function() {
             { extend: 'print', className: 'btn btn-secondary' },
             { extend: 'colvis', className: 'btn btn-info' }
         ]
-      } 
+      }
     } );
- 
+
     table.buttons().container()
         .appendTo( '#example_wrapper .col-md-6:eq(0)' );
 } );

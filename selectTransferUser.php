@@ -203,6 +203,7 @@ if (isset($_POST['amount'])) {
         $receiver = $sql1[0]['companyname'];
         $receiverid = $sql1[0]['userid'];
         //!İşlem geçmişi için veritabanına ekleme işlemi
+        //?İşlem geçmişinde tutar bilgisi düzenle
         $sql = "INSERT INTO transactions (sender,senderid,reciver,reciverid,companybalance) VALUES ('$sender','$senderid','$receiver','$receiverid','$amount')";
         $SORGU = $DB->prepare($sql);
         $SORGU->execute();
