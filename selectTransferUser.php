@@ -42,14 +42,19 @@ require 'navbar.php';
 //!Parayı alacak kişinin idsini get ile aldım
 //? Username için inner join kullanmak zorunda kaldım. Çünkü company tablosunda username yok.
 $sql = "SELECT companys.companyid,companys.companyname,companys.companyiban,companys.companybalance,users.username
-FROM users 
-INNER JOIN companys 
+FROM users
+INNER JOIN companys
 ON companys.userid=users.userid where companys.companyid = :idCompany";
 $SORGU = $DB->prepare($sql);
 $SORGU->bindParam(':idCompany', $_GET['idCompany']);
 $SORGU->execute();
 $takeUsers = $SORGU->fetchAll(PDO::FETCH_ASSOC);
-
+//! Giriş yapan kullanıcı ile şirket sahibi aynı değilse yetkilendirme hatası
+if ($_GET['idCompany'] != $takeUsers[0]['companyid']) {
+    //!Yetkilendirme hatası durumunda bir hata sayfasına yönlendir veya bir hata mesajı göster
+    header("Location: authorizationControl.php");
+    exit();
+}
 foreach ($takeUsers as $takeUser) {
     echo "
 <tr>
@@ -74,15 +79,22 @@ foreach ($takeUsers as $takeUser) {
   <div class="mb-3">
   <?php
 
-  //!Parayı gönderecek hesap
-  //!Giriş yapan kullanıcının idsini sesiondan aldım
+//!Parayı gönderecek hesap
+//!Giriş yapan kullanıcının idsini sesiondan aldım
 $sql = "SELECT * FROM companys WHERE userid = :idUser";
 $SORGU = $DB->prepare($sql);
-$SORGU->bindParam(':idUser',$_SESSION['id']);
+$SORGU->bindParam(':idUser', $_SESSION['id']);
 $SORGU->execute();
 $giveUsers = $SORGU->fetchAll(PDO::FETCH_ASSOC);
-/*   echo '<pre>'; print_r($giveUsers);
-die();  */ 
+/* echo '<pre>';
+print_r($giveUsers);
+die(); */
+//! Giriş yapan kullanıcı ile şirket sahibi aynı değilse yetkilendirme hatası
+if ($_GET['idCompany'] == $giveUsers[0]['companyid']) {
+    //!Yetkilendirme hatası durumunda bir hata sayfasına yönlendir veya bir hata mesajı göster
+    header("Location: authorizationControl.php");
+    exit();
+}
 ?>
   <select class="form-select" name="form_selectedaccount"required>
   <option disabled selected value="">Select Account</option>
@@ -109,16 +121,16 @@ die();  */
 </div>
 </div>
 <?php
-//?Para alma ve gönderme işlemleri 
-  //!sql1=Alıcı hesap
-   //!sql2=Gönderici hesap
+//?Para alma ve gönderme işlemleri
+//!sql1=Alıcı hesap
+//!sql2=Gönderici hesap
 if (isset($_POST['amount'])) {
     $amount = $_POST['amount'];
     /*   SELECT companys.*,users.*
-    FROM users 
-    INNER JOIN companys 
+    FROM users
+    INNER JOIN companys
     ON companys.userid=users.userid WHERE users.userid = :idUser */
-  
+
     //!Alıcı hesap
     //!sql1=Alıcı hesap
     $sql = "SELECT * FROM companys WHERE companyid = :idCompany";
@@ -126,23 +138,22 @@ if (isset($_POST['amount'])) {
     $SORGU->bindParam(':idCompany', $_GET['idCompany']);
     $SORGU->execute();
     $sql1 = $SORGU->fetchAll(PDO::FETCH_ASSOC);
-       /* echo '<pre>'; print_r($sql1);
-        die();  */ 
-        /*
-        SELECT companys.*,users.*
-     FROM users 
-    INNER JOIN companys 
+    /* echo '<pre>'; print_r($sql1);
+    die();  */
+    /*
+    SELECT companys.*,users.*
+    FROM users
+    INNER JOIN companys
     ON companys.userid=users.userid WHERE users.userid = :form_selectedaccount */
     //!Gönderici hesap
-     //!sql2=Gönderici hesap
+    //!sql2=Gönderici hesap
     $sql = "SELECT * FROM companys WHERE userid = :form_selectedaccount";
     $SORGU = $DB->prepare($sql);
     $SORGU->bindParam(':form_selectedaccount', $_POST['form_selectedaccount']);
     $SORGU->execute();
     $sql2 = $SORGU->fetchAll(PDO::FETCH_ASSOC);
-        /*    echo '<pre>'; print_r($sql2);
-        die();  */
-        
+    /*    echo '<pre>'; print_r($sql2);
+    die();  */
 
     //!Girilen para değeri negatifse
     if (($amount) < 0) {
@@ -150,7 +161,7 @@ if (isset($_POST['amount'])) {
         echo ' alert("Oops! Negative values cannot be transferred")'; // showing an alert box.
         echo '</script>';
     }
-        //!Para kontrolü sonradan düşünülecek
+    //!Para kontrolü sonradan düşünülecek
     /*   // constraint to check insufficient balance.
     else if($amount > $sql2[0]['balance'])
     {
@@ -175,8 +186,8 @@ if (isset($_POST['amount'])) {
         $SORGU->bindParam(':form_selectedaccount', $_POST['form_selectedaccount']);
         $SORGU->execute();
 
-         //!Alıcı hesaptan para arttırma ve günceleme işlemi
-          //!Gönderici hesaptan parayı al ve veritabanını güncelle
+        //!Alıcı hesaptan para arttırma ve günceleme işlemi
+        //!Gönderici hesaptan parayı al ve veritabanını güncelle
         $newbalance = $sql1[0]['companybalance'] + $amount;
         $sql = "UPDATE companys set companybalance=$newbalance where companyid=:idCompany";
         $SORGU = $DB->prepare($sql);
@@ -185,10 +196,10 @@ if (isset($_POST['amount'])) {
         //!İşlem geçmişi için
         //?sql1=Alıcı hesap
         //?sql2=Gönderici hesap
-       //!Alıcı hesap bilgileri
+        //!Alıcı hesap bilgileri
         $sender = $sql2[0]['companyname'];
         $senderid = $sql2[0]['userid'];
-       //!Gönderici hesap bilgileri
+        //!Gönderici hesap bilgileri
         $receiver = $sql1[0]['companyname'];
         $receiverid = $sql1[0]['userid'];
         //!İşlem geçmişi için veritabanına ekleme işlemi
@@ -201,14 +212,14 @@ if (isset($_POST['amount'])) {
         $CEVAP = $SORGU->fetchAll(PDO::FETCH_ASSOC);
         //!Eğer işlem başarılıysa
         if (count($CEVAP) > 0) {
-          echo "<script> alert('Transaction Completed');
+            echo "<script> alert('Transaction Completed');
                                      window.location='selectTransferUser.php?idCompany={$sql1[0]['companyid']}';
                            </script>";
-      } else {
-        echo '<script type="text/javascript">';
-        echo ' alert("Transaction Not Completed")';
-        echo '</script>';
-      }
+        } else {
+            echo '<script type="text/javascript">';
+            echo ' alert("Transaction Not Completed")';
+            echo '</script>';
+        }
 
         $newbalance = 0;
         $amount = 0;
