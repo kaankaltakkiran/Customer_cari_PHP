@@ -1,6 +1,48 @@
 <?php
-$activePage="register";
+$activePage = "register";
 ?>
+<!-- Kullanıcı üye bilgilerini veri tabanına kaydetme -->
+<?php
+if (isset($_POST['form_email'])) {
+    //!Hata mesajlarını göstermek için boş bir dizi
+    $errors = array();
+
+    require_once 'db.php';
+    $name = $_POST['form_name'];
+    $email = $_POST['form_email'];
+    $gender = $_POST['form_gender'];
+    $password = $_POST['form_password'];
+/*  Şifrele hashleme */
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+    //?Kullanıcı var mı yok mu kontrol etme
+    $sql = "SELECT * FROM users WHERE useremail = :form_email";
+    $SORGU = $DB->prepare($sql);
+    $SORGU->bindParam(':form_email', $email);
+    $SORGU->execute();
+    $isUser = $SORGU->fetch(PDO::FETCH_ASSOC);
+    /*  echo '<pre>';
+    print_r($kaans);
+    die(); */
+    //!Eğer kullanıc üye olmuşsa  hata ver
+    if ($isUser) {
+        $errors[] = "This email is already registered";
+
+        //!Eğer kullanıcı yoksa kaydet
+    } else {
+        $sql = "INSERT INTO users (username,useremail,usergender,userpassword) VALUES (:form_name,:form_email,:form_gender,'$password')";
+        $SORGU = $DB->prepare($sql);
+        $SORGU->bindParam(':form_name', $name);
+        $SORGU->bindParam(':form_email', $email);
+        $SORGU->bindParam(':form_gender', $gender);
+
+        $SORGU->execute();
+        //!Kayıt başarılıysa login sayfasına yönlendir
+        header("location: login.php");
+    }
+}
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -13,19 +55,29 @@ $activePage="register";
   </head>
   <body>
     <?php
-    require_once('navbar.php');
-    ?>
+require_once 'navbar.php';
+?>
     <div class="container">
   <div class="row justify-content-center mt-3">
   <div class="col-6">
   <!--   İşlemden sonra login sayfasına yönlendirme -->
-  <?php 
-if (isset($_POST['form_email'])) {
-  header("location: login.php");
-}
-?>
 <form method="POST">
 <h1 class="text-center text-danger">Register</h1>
+<?php
+//! Hata mesajlarını göster
+if (!empty($errors)) {
+    foreach ($errors as $error) {
+        echo '
+    <div class="container">
+<div class="auto-close alert mt-3 text-center alert-danger alert-dismissible fade show" role="alert">
+' . $error . '
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+</div>
+';
+    }
+}
+?>
 <div class="form-floating mb-3">
   <input type="text" name="form_name" class="form-control"required>
   <label>Name</label>
@@ -51,32 +103,13 @@ if (isset($_POST['form_email'])) {
   </label>
 </div>
 
-                  <button type="submit" name="submit" class="btn btn-primary mt-1">Register</button>   	
+                  <button type="submit" name="submit" class="btn btn-primary mt-1">Register</button>
      </form>
      </div>
 </div>
 </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="./public/js/hideShow.js"></script>
+    <script src="./public/js/autoCloseAlert.js"></script>
   </body>
 </html>
-<!-- Kullanıcı üye bilgilerini veri tabanına kaydetme -->
-<?php
-if(isset($_POST['form_email'])){
-  require_once('db.php');
-  $name = $_POST['form_name'];
-  $email = $_POST['form_email'];
-  $gender=$_POST['form_gender'];
-  $password = $_POST['form_password'];
-/*  Şifrele hashleme */
-  $password = password_hash($password, PASSWORD_DEFAULT);   
-
-  $sql = "INSERT INTO users (username,useremail,usergender,userpassword) VALUES (:form_name,:form_email,:form_gender,'$password')";
-  $SORGU = $DB->prepare($sql);
-  $SORGU->bindParam(':form_name',  $name);
-  $SORGU->bindParam(':form_email',  $email);
-  $SORGU->bindParam(':form_gender',  $gender);
-
-  $SORGU->execute();
-
-}

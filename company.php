@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once('db.php');
+require_once 'db.php';
 require 'loginControl.php';
 ?>
 <!doctype html>
@@ -26,20 +26,21 @@ require 'navbar.php';
 <?php
 //!Silme işlemi
 //! Gelen id ye göre şirketi silme
-if(isset($_GET['remove'])){
-  require('db.php');
-  $remove_id = $_GET['remove'];
-  $sql = "DELETE FROM companys WHERE companyid = :remove";
-  $SORGU = $DB->prepare($sql);
-   $SORGU->bindParam(':remove', $remove_id); 
-   $SORGU->execute();
-   echo '
+if (isset($_GET['remove'])) {
+    require 'db.php';
+    $remove_id = $_GET['remove'];
+    $sql = "DELETE FROM companys WHERE companyid = :remove";
+    $SORGU = $DB->prepare($sql);
+    $SORGU->bindParam(':remove', $remove_id);
+    $SORGU->execute();
+    echo '
 <div class="alert auto-close text-center alert-success alert-dismissible fade show" role="alert">
 Company Deleted...
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 ';
-  };
+}
+;
 ?>
 <!-- Şirket bilgilerini listeleme-->
 <div class="table-responsive">
@@ -62,21 +63,23 @@ Company Deleted...
 </div>
 <!-- Giriş yapan kullanıcının id bilgisine göre şirketini listeleme -->
 <?php
-require_once('db.php');
+require_once 'db.php';
 $sql = "SELECT * FROM companys WHERE userid = :idUser";
 $SORGU = $DB->prepare($sql);
-$SORGU->bindParam(':idUser',$_GET['idUser']);
+$SORGU->bindParam(':idUser', $_GET['idUser']);
 $SORGU->execute();
 $companys = $SORGU->fetchAll(PDO::FETCH_ASSOC);
 /* joinli sql */
 
 /* SELECT companys.*,users.*
-FROM users 
-INNER JOIN companys 
+FROM users
+INNER JOIN companys
 ON companys.userid=users.userid where users.userid=:idUser */
 
+/* <th>{$company['companyid']}</th> */
+/* <th>" . htmlspecialchars($company['companyid']) . "</th> */
 foreach ($companys as $company) {
-echo "
+    echo "
 <tr>
 <th>{$company['companyid']}</th>
 <td>{$company['companyname']}</td>
@@ -88,7 +91,7 @@ echo "
 <td>{$company['companybalance']}₺</td>
 <td><a href='updateCompany.php?idCompany={$company['companyid']}' class='btn btn-success btn-sm'>Update</a></td>
 <td><a href='company.php?remove={$company['companyid']}' onclick='return confirm(\"Remove Company?\")' class='btn btn-danger btn-sm'>Delete</a></td>
-</tr> 
+</tr>
 ";
 }
 ?>
@@ -101,7 +104,7 @@ echo "
 </div>
 <!-- <div class="text-center">
   <a type="button" href="transerMoney.php"  class="btn btn-danger mt-2">Transfer Money</a>
-</div>  -->  
+</div>  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </body>
 </html>
