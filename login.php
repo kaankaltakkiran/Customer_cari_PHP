@@ -1,5 +1,5 @@
 <?php
-$activePage="login";
+$activePage = "login";
 ?>
 <!doctype html>
 <html lang="en">
@@ -13,104 +13,96 @@ $activePage="login";
   </head>
   <body>
   <?php
-    require_once('navbar.php');
-    ?>
+require_once 'navbar.php';
+?>
 <?php
-require_once('db.php');
+require_once 'db.php';
 
 @session_start();
 
 //! Eğer zaten giriş yapmışsa, index.php'ye yönlendir
 if (isset($_SESSION['isLogin'])) {
-  // Oturum açmış
-  header("location: index.php");
-  die();
+    // Oturum açmış
+    header("location: index.php");
+    die();
 }
 //!form_email post edilmişse
 if (isset($_POST['form_email'])) {
-  // Form gönderildi
-  // 1.DB'na bağlan
-  // 2.SQL hazırla ve çalıştır
-  // 3.Gelen sonuç 1 satırsa GİRİŞ BAŞARILI değilse, BAŞARISIZ
-  //! Eğer boş alan varsa uyarı mesajı
-  if(empty($_POST["form_email"]) || empty($_POST["form_password"]))  
-  {  
-       echo '
+    // Form gönderildi
+    // 1.DB'na bağlan
+    // 2.SQL hazırla ve çalıştır
+    // 3.Gelen sonuç 1 satırsa GİRİŞ BAŞARILI değilse, BAŞARISIZ
+    //! Eğer boş alan varsa uyarı mesajı
+    if (empty($_POST["form_email"]) || empty($_POST["form_password"])) {
+        echo '
                       <div class="container">
-                      
+
                   <div class="alert mt-3 text-center alert-info alert-dismissible fade show" role="alert">
                   Both Fields are required...
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
                   </div>
-                  ';    
-  }
-  //! Boş alan yoksa  
-  else  
-  {
-    //! Post edilen verileri değişkenlere atama
-    $useremail  = $_POST['form_email'];
-    $userpassword = $_POST['form_password']; 
-    //! SQL hazırlama ve çalıştırma
-    //! formdan gelen email ile db de varsa
-    $sql = "SELECT * FROM users  WHERE useremail = :form_email";
-    $SORGU = $DB->prepare($sql);
-  
-    $SORGU->bindParam(':form_email',$useremail);
-  
-    $SORGU->execute();
-  
-    $CEVAP = $SORGU->fetchAll(PDO::FETCH_ASSOC);
-      /* var_dump($CEVAP);
-      echo "Gelen cevap " .  count($CEVAP) . " adet satırdan oluşuyor";
-      die(); */
-      //! Gelen sonuç 1 satırsa db de kullanıcı var olduğunu anlarız
-       if(count($CEVAP) == 1)  
-       { 
-                  //! Kullanıcının şifresini doğrulama
-                  //? posttan gelen ile db den gelen karşılaştırma
-                  //? password_verify() fonksiyonu ile   
-                 if(password_verify($userpassword, $CEVAP[0]['userpassword']))  
-                 {  
-                      //return true;  
-                     @session_start();
-                     $_SESSION['isLogin'] = 1; // Kullanıcı giriş yapmışsa 1 yap
-                     $_SESSION['adsoyad'] = $CEVAP[0]['username']; // Kullanıcının adını al
-                     $_SESSION['id'] = $CEVAP[0]['userid']; // Kullanıcının ID'sini al
-                     $_SESSION['rol'] = $CEVAP[0]['role']; // Kullanıcının ROL'ünü al
-                    header("location: index.php");
-                    die();    
-                 }  
-                 else  
-                 {  
-                      //return false;  
-                      //!Şifreler Eşleşmiyorsa
-                      echo '
+                  ';
+    }
+    //! Boş alan yoksa
+    else {
+        //! Post edilen verileri değişkenlere atama
+        $useremail = $_POST['form_email'];
+        $userpassword = $_POST['form_password'];
+        //! SQL hazırlama ve çalıştırma
+        //! formdan gelen email ile db de varsa
+        $sql = "SELECT * FROM users  WHERE useremail = :form_email";
+        $SORGU = $DB->prepare($sql);
+
+        $SORGU->bindParam(':form_email', $useremail);
+
+        $SORGU->execute();
+
+        $CEVAP = $SORGU->fetchAll(PDO::FETCH_ASSOC);
+        /* var_dump($CEVAP);
+        echo "Gelen cevap " .  count($CEVAP) . " adet satırdan oluşuyor";
+        die(); */
+        //! Gelen sonuç 1 satırsa db de kullanıcı var olduğunu anlarız
+        if (count($CEVAP) == 1) {
+            //! Kullanıcının şifresini doğrulama
+            //? posttan gelen ile db den gelen karşılaştırma
+            //? password_verify() fonksiyonu ile
+            if (password_verify($userpassword, $CEVAP[0]['userpassword'])) {
+                //return true;
+                @session_start();
+                $_SESSION['isLogin'] = 1; // Kullanıcı giriş yapmışsa 1 yap
+                $_SESSION['adsoyad'] = $CEVAP[0]['username']; // Kullanıcının adını al
+                $_SESSION['id'] = $CEVAP[0]['userid']; // Kullanıcının ID'sini al
+                $_SESSION['rol'] = $CEVAP[0]['role']; // Kullanıcının ROL'ünü al
+                header("location: index.php");
+                die();
+            } else {
+                //return false;
+                //!Şifreler Eşleşmiyorsa
+                echo '
                       <div class="container">
-                      
+
                   <div class="alert mt-3 text-center alert-danger alert-dismissible fade show" role="alert">
                   INCORRECT EMAIL or PASSWORD MATCH!...
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
                   </div>
-                  ';  
-                  
-            }  
-       }   
-       else  
-       {
-        //! Kullanıcı yoksa  
-        echo '
-        <div class="container">  
+                  ';
+
+            }
+        } else {
+            //! Kullanıcı yoksa
+            echo '
+        <div class="container">
     <div class="alert mt-3 text-center alert-danger alert-dismissible fade show" role="alert">
-    INCORRECT EMAIL or PASSWORD!...
+    INCORRECT EMAIL Or PASSWORD!...
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     </div>
     ';
-       }  
-  }  
-  
+        }
+    }
+
 }
 ?>
     <div class="container">
@@ -120,7 +112,8 @@ if (isset($_POST['form_email'])) {
 <form method="POST">
 <h1 class="text-center text-danger">Login</h1>
   <div class="form-floating mb-3">
-  <input type="email" name="form_email" class="form-control">
+  <!-- htmlspecialchars kullanıcın girdiği kodları güvenli hale getirir -->
+  <input type="email" name="form_email" value="<?php echo isset($_POST['form_email']) ? htmlspecialchars($useremail) : ''; ?>" class="form-control">
   <label>Email</label>
 </div>
 <!-- <div class="form-floating mb-3">
@@ -132,7 +125,7 @@ if (isset($_POST['form_email'])) {
   <span class="input-group-text bg-transparent"><i id="togglePassword" class="bi bi-eye-slash"></i></span>
 </div>
 
-                  <button type="submit" name="submit" class="btn btn-primary">Login</button>   	
+                  <button type="submit" name="submit" class="btn btn-primary">Login</button>
      </form>
      </div>
 </div>
