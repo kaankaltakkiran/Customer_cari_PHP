@@ -4,6 +4,9 @@ Customer cari web sayfası, kullanıcının üye olduktan sonra kendisine şirke
 
 Grid yapılarında [datatablestan](https://datatables.net/) faydalandım. Aşşağıda bahsedildiği gibi bir çok özellik sağladı.
 
+**Recaptcha** konusunda şu linkten faydalandım: [Recaptcha](https://davisonpro.dev/php-recaptcha/)
+
+
  ## Proje nasıl kullanılır?
 - [ ] Proje clone edilir.
 - [ ] Database klasöründe ki sql dosyası database import edilir.
@@ -22,6 +25,8 @@ Normal kullanıcı3= email= selin@gmail.com password= 123
 
  ## Yapılan Temel Geliştirmeler
 - [X] Kullanıcı **Customer cari** hizmetini kullabilmesi için önce üye olması gerekir. Kullanıcı üye olduktan sonra index sayfasına yönlendirilir.
+- [X] Kullanıcı **login** Recaptcha doğrulaması gerekmektedir.
+- [X] Kullanıcı,mevcutta olmayan bir sayfaya gitmek istediğinde custom olarak hazırlanan 404 page sayfasını görmektedir.
 - [X] Anasayfa da kullanıcı şirket hesabı oluşturma bölümünü görür ve **Add Company** butonuna tıklayıp şirketini ekler.
 - [X] Kullanıcı, şirketini başarıyla ekledikten sonra kendine ait şirket bilgilerini görür isterse **See My Company** butonuna tıklayarak şirket bilgilerini görebilir yada **Balance Transfer Action** butonuna tıklayarak para transfer işlemi gerçekleştirebilir.
 - [X] Kullanıcı, **See My Company** butonuna tıklayarak şirket bilgilerini gördüğü sayfa açılır. Bu sayfada kullanıcı isterse şirket bilgilerini güncelleyebilir veya şirketini silebilir.
