@@ -1,0 +1,15 @@
+Options -Indexes
+RewriteEngine On
+RewriteBase /
+
+# Özel hata sayfalarını tanımla:
+ErrorDocument 404 /Customer%20Cari/404.php
+
+# Geçersiz bağlantılar için (var olmayan dosyalar veya dizinler):
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ - [L,R=404]
+
+# Bazı geçerli bağlantılar için (erişilemez olan var olan dosyalar):
+RewriteCond %{THE_REQUEST} \s+/some_file\.php [NC]
+RewriteRule ^ - [L,R=404]
