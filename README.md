@@ -40,5 +40,5 @@ Normal kullanıcı3= email= selin@gmail.com password= 123
 - [X] Kullanıcı, **Transaction History** sayfasında gördüğü işlem geçmişinde isterse arama, **pdf, excel, csv** türünde export alabilir. Ayrıca **copy** butonu ile kopyalayabilir işlem geçmişini, **print** ile çıktı alabilir. Sonra olarak **column visibility** ile istediği sütünu gösterebilir.
       
 ## Site Resimleri
- https://github.com/kaankaltakkiran/php_video
+https://github.com/kaankaltakkiran/php_image
 
