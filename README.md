@@ -1,5 +1,5 @@
 # Customer_cari_PHP
- # Proje kullanım öyküsü
+ ## Proje kullanım öyküsü
 Customer cari web sayfası, kullanıcının üye olduktan sonra kendisine şirket hesabı açabilidiği bir web sayfadır. Kullanıcı açtığı bu şirket hesabı ile bu web site hizmetini kullanan diğer şirket hesapları arasında  **para alışverişi** yapabildiği bir hizmettir.
 
 Grid yapılarında [datatablestan](https://datatables.net/) faydalandım. Aşşağıda bahsedildiği gibi bir çok özellik sağladı.
@@ -17,11 +17,13 @@ Grid yapılarında [datatablestan](https://datatables.net/) faydalandım. Aşşa
 
  ## Kullanıcı Bilgileri
  
-Normal kullanıcı1= email= veli@gmail.com password= 123
 
-Normal kullanıcı2= email= ahmet@gmail.com password= 123
+| Users               |Email                          |Password                         |
+|----------------|-------------------------------|-----------------------------|
+|User Veli|`veli@gmail.com`              |`123`          |
+|User Ahmet          |`veli@gmail.com`              |`123`           |
+|User Selin          |`veli@gmail.com`             |`123`
 
-Normal kullanıcı3= email= selin@gmail.com password= 123
 
  ## Yapılan Temel Geliştirmeler
 - [X] Kullanıcı **Customer cari** hizmetini kullabilmesi için önce üye olması gerekir. Kullanıcı üye olduktan sonra index sayfasına yönlendirilir.
@@ -40,5 +42,5 @@ Normal kullanıcı3= email= selin@gmail.com password= 123
 - [X] Kullanıcı, **Transaction History** sayfasında gördüğü işlem geçmişinde isterse arama, **pdf, excel, csv** türünde export alabilir. Ayrıca **copy** butonu ile kopyalayabilir işlem geçmişini, **print** ile çıktı alabilir. Sonra olarak **column visibility** ile istediği sütünu gösterebilir.
       
 ## Site Resimleri
-https://github.com/kaankaltakkiran/php_image
+https://github.com/kaankaltakkiran/php-proje-resimleri/tree/main/customer%20cari%20resimler
 
