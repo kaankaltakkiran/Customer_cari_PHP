@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once('db.php');
+require_once 'db.php';
 require 'loginControl.php';
 ?>
 <!doctype html>
@@ -9,7 +9,7 @@ require 'loginControl.php';
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Transfer Actions</title>
-    <link rel="icon" type="image/x-icon" href="./public/img/favicon.png">
+    <link rel="icon" type="image/x-icon" href="./Public/img/favicon.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
@@ -45,10 +45,10 @@ require 'navbar.php';
 </div>
 <!-- Gerekli bilgileri almak için join kullanmak zorunda kaldım. Çünkü user tablosunda sadece username ve userid var. Company tablosunda ise company bilgileri var. Bu yüzden join kullanarak iki tabloyu birleştirdim. -->
 <?php
-require_once('db.php');
+require_once 'db.php';
 $sql = "SELECT companys.companyid,companys.companyname,companys.companyemail,companys.companynumber,companys.companyiban,companys.companyaddress,users.username,users.userid
-FROM users 
-INNER JOIN companys 
+FROM users
+INNER JOIN companys
 ON companys.userid=users.userid ORDER BY companys.companyid;";
 $SORGU = $DB->prepare($sql);
 $SORGU->execute();
@@ -56,9 +56,9 @@ $users = $SORGU->fetchAll(PDO::FETCH_ASSOC);
 /* SELECT * FROM users */
 
 foreach ($users as $user) {
- /*  giriş yapan kullanıcı kendi adını görmesin diye */
-  if ($user['userid'] != $_SESSION['id']) {
-echo "
+    /*  giriş yapan kullanıcı kendi adını görmesin diye */
+    if ($user['userid'] != $_SESSION['id']) {
+        echo "
 <tr>
 <th>{$user['companyid']}</th>
 <td>{$user['companyname']}</td>
@@ -68,9 +68,9 @@ echo "
 <td>{$user['companyiban']}</td>
 <td>{$user['companyaddress']}</td>
 <td><a href='selectTransferUser.php?idCompany={$user['companyid']}' class='btn btn-success btn-sm'>Action</a></td>
-</tr> 
+</tr>
 ";
-}
+    }
 }
 ?>
 </tbody>
@@ -78,7 +78,7 @@ echo "
 </div>
 </div>
 
-<a href="index.php" class="btn btn-warning">Back To Home</a> 
+<a href="index.php" class="btn btn-warning">Back To Home</a>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
