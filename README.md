@@ -21,7 +21,7 @@ Grid yapılarında [datatablestan](https://datatables.net/) faydalandım. Aşşa
 | Users               |Email                          |Password                         |
 |----------------|-------------------------------|-----------------------------|
 |User Veli|`veli@gmail.com`              |`123`          |
-|User Ahmet          |`veli@gmail.com`              |`123`           |
+|User Ahmet          |`ahmet@gmail.com`              |`123`           |
 |User Selin          |`veli@gmail.com`             |`123`
 
 
