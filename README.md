@@ -45,5 +45,5 @@ Bu bağlantıdan örnek kullanımı inceleyebilirsiniz: https://github.com/kaank
 - [X] Kullanıcı, **Transaction History** sayfasında gördüğü işlem geçmişinde isterse arama, **pdf, excel, csv** türünde export alabilir. Ayrıca **copy** butonu ile kopyalayabilir işlem geçmişini, **print** ile çıktı alabilir. Sonra olarak **column visibility** ile istediği sütünu gösterebilir.
       
 ## Site Resimleri
-https://github.com/kaankaltakkiran/php-proje-resimleri/tree/main/customer%20cari%20resimler
+https://github.com/kaankaltakkiran/php-proje-resimleri/tree/main/customer_cari_resimler
 
