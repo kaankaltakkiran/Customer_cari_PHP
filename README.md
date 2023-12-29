@@ -2,10 +2,13 @@
  ## Proje kullanım öyküsü
 Customer cari web sayfası, kullanıcının üye olduktan sonra kendisine şirket hesabı açabilidiği bir web sayfadır. Kullanıcı açtığı bu şirket hesabı ile bu web site hizmetini kullanan diğer şirket hesapları arasında  **para alışverişi** yapabildiği bir hizmettir.
 
-Grid yapılarında [datatablestan](https://datatables.net/) faydalandım. Aşşağıda bahsedildiği gibi bir çok özellik sağladı.
+Grid yapılarında [Datatables](https://datatables.net/)faydalandım. Tablo konusunda hem görünüm hem de işlevsellik sağlıyor.
 
-**Recaptcha** konusunda şu linkten faydalandım: [Recaptcha](https://davisonpro.dev/php-recaptcha/)
+Bu bağlantıdan örnek kullanımı inceleyebilirsiniz: https://github.com/kaankaltakkiran/ornekler/tree/main/datatables
 
+**Recaptcha** kullandım. Botlara karşı güvenlik sağlıyor.
+
+Bu bağlantıdan örnek kullanımı inceleyebilirsiniz: https://github.com/kaankaltakkiran/ornekler/tree/main/login_recaptcha
 
  ## Proje nasıl kullanılır?
 - [ ] Proje clone edilir.
